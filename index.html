@@ -727,6 +727,9 @@ function fillMonths() {
   var opts = keys.map(function(k){ var p=k.split('-'); return '<option value="'+k+'">'+MESES[+p[1]]+' '+p[0]+'</option>'; }).join('');
   document.getElementById('h-mes').innerHTML = opts;
   document.getElementById('r-mes').innerHTML = opts;
+  // Forzar mes actual siempre
+  document.getElementById('h-mes').value = cur;
+  document.getElementById('r-mes').value = cur;
 }
 
 // ─── HISTORIAL ───────────────────────────────────────────────────────────────
