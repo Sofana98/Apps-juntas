@@ -1010,7 +1010,16 @@ function renderRes() {
 document.getElementById('g-fecha').value = todayStr();
 document.getElementById('t-fecha').value = todayStr();
 initGCats();
-loadAll();
+loadAll(function() {
+  var now = new Date();
+  var cur = now.getFullYear() + '-' + now.getMonth();
+  var hMes = document.getElementById('h-mes');
+  var rMes = document.getElementById('r-mes');
+  if (hMes) hMes.value = cur;
+  if (rMes) rMes.value = cur;
+  renderHist();
+  renderRes();
+});
 </script>
 </body>
-</html
+</html>
