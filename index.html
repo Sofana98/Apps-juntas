@@ -14,20 +14,35 @@ html { font-size: 16px; }
 body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1A1916; min-height: 100vh; }
 .app { max-width: 430px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
 
+/* LOGIN */
+.login-screen { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 32px 24px; max-width: 430px; margin: 0 auto; }
+.login-screen.active { display: flex; }
+.login-emoji { font-size: 52px; margin-bottom: 16px; }
+.login-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+.login-sub { font-size: 15px; color: #888; margin-bottom: 48px; text-align: center; }
+.login-btns { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.login-btn { width: 100%; padding: 20px; border: 2px solid #E0DDD6; border-radius: 16px; font-size: 20px; font-weight: 800; cursor: pointer; background: #fff; font-family: inherit; text-align: center; touch-action: manipulation; }
+.login-btn.sofi { border-color: #F0B8CB; color: #C9406A; background: #FDF0F4; }
+.login-btn.guille { border-color: #BFDBFE; color: #2563EB; background: #EFF6FF; }
+
 /* HEADER */
 .header { background: #1A1916; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 20; }
+.header-left { display: flex; flex-direction: column; }
 .header-title { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
 .header-title span { color: #F0C040; }
+.header-user { font-size: 12px; font-weight: 700; color: #F0C040; margin-top: 1px; }
+.header-right { display: flex; align-items: center; gap: 8px; }
 .sync-pill { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 20px; }
 .sync-pill.ok { background: rgba(22,163,74,0.2); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
 .sync-pill.syncing { background: rgba(217,119,6,0.2); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
 .sync-pill.error { background: rgba(220,38,38,0.2); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
 .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.switch-btn { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; cursor: pointer; touch-action: manipulation; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 .blink { animation: blink 1s infinite; }
 
 /* TABS */
-.tabs { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; background: #fff; border-bottom: 1px solid #E8E4DC; position: sticky; top: 53px; z-index: 19; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; background: #fff; border-bottom: 1px solid #E8E4DC; position: sticky; top: 61px; z-index: 19; }
 .tab { padding: 11px 4px; text-align: center; font-size: 12px; font-weight: 600; color: #999; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s; letter-spacing: 0.01em; }
 .tab.active { color: #1A1916; border-bottom-color: #F0C040; }
 
@@ -41,11 +56,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .field { margin-bottom: 15px; }
 .field:last-child { margin-bottom: 0; }
 .field > label { display: block; font-size: 11px; font-weight: 700; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.07em; }
-.field input[type=text], .field input[type=number], .field input[type=date], .field select {
-  width: 100%; font-size: 16px; color: #1A1916; background: #F7F6F2;
-  border: 1px solid #E0DDD6; border-radius: 10px; padding: 11px 13px;
-  font-family: inherit; outline: none; -webkit-appearance: none; appearance: none;
-}
+.field input[type=text], .field input[type=number], .field input[type=date], .field select { width: 100%; font-size: 16px; color: #1A1916; background: #F7F6F2; border: 1px solid #E0DDD6; border-radius: 10px; padding: 11px 13px; font-family: inherit; outline: none; -webkit-appearance: none; appearance: none; }
 .field input:focus, .field select:focus { border-color: #1A1916; background: #fff; }
 .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .tb { flex: 1; min-width: 60px; padding: 11px 6px; border: 1.5px solid #E0DDD6; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; background: #F7F6F2; color: #999; font-family: inherit; text-align: center; -webkit-appearance: none; touch-action: manipulation; transition: all 0.12s; }
@@ -54,7 +65,6 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .tb.sel.guille-s { background: #EFF6FF; border-color: #2563EB; color: #2563EB; }
 .tb.sel.gasto-s { background: #FEF2F2; border-color: #DC2626; color: #DC2626; }
 .tb.sel.ingreso-s { background: #F0FDF4; border-color: #16A34A; color: #16A34A; }
-
 .save-btn { width: 100%; padding: 15px; background: #1A1916; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; font-family: inherit; margin-top: 4px; letter-spacing: -0.2px; touch-action: manipulation; }
 .save-btn:disabled { opacity: 0.4; }
 .save-btn.editing { background: #2563EB; }
@@ -85,8 +95,6 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .edate { font-size: 11px; color: #bbb; }
 .empty { text-align: center; padding: 40px 20px; color: #bbb; font-size: 14px; }
 .lmsg { text-align: center; padding: 32px; color: #bbb; font-size: 14px; }
-
-/* FILTER TABS IN HISTORIAL */
 .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
 .ftab { flex: 1; padding: 9px 6px; text-align: center; font-size: 12px; font-weight: 700; border-radius: 10px; cursor: pointer; border: 1.5px solid #E0DDD6; color: #999; background: #fff; touch-action: manipulation; }
 .ftab.active { border-color: #1A1916; color: #1A1916; background: #F7F6F2; }
@@ -98,7 +106,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .sval { font-size: 20px; font-weight: 800; color: #1A1916; letter-spacing: -0.5px; }
 .sval.red { color: #DC2626; } .sval.green { color: #16A34A; }
 
-/* BALANCE BANNER */
+/* BALANCE */
 .balance-card { border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #FDE68A; background: #FFFBEB; cursor: pointer; }
 .balance-card.ok { border-color: #BBF7D0; background: #F0FDF4; cursor: default; }
 .b-label { font-size: 11px; font-weight: 800; color: #92400E; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
@@ -118,6 +126,11 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .b-pago-name { font-size: 12px; color: #166534; }
 .b-pago-amt { font-size: 12px; font-weight: 700; color: #16A34A; }
 
+/* SALDO ANTERIOR */
+.saldo-card { background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.saldo-label { font-size: 11px; font-weight: 800; color: #0369A1; text-transform: uppercase; letter-spacing: 0.06em; }
+.saldo-val { font-size: 14px; font-weight: 800; color: #0369A1; }
+
 /* BAR CHART */
 .bar-row { margin-bottom: 11px; }
 .bar-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
@@ -126,7 +139,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .bar-track { height: 5px; background: #F0EDE6; border-radius: 3px; }
 .bar-fill { height: 5px; border-radius: 3px; background: #1A1916; }
 
-/* SUBS FIELDS */
+/* SUBS */
 .porc-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
 .porc-label { font-size: 14px; font-weight: 600; white-space: nowrap; min-width: 65px; }
 .subs-info { background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 10px; padding: 10px 14px; margin-top: 8px; font-size: 13px; color: #6D28D9; line-height: 1.6; }
@@ -134,18 +147,36 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 /* TOAST */
 .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #1A1916; color: #fff; padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 999; white-space: nowrap; max-width: 88vw; }
 .toast.show { opacity: 1; }
-
-/* SECTION LABEL */
 .sec-label { font-size: 11px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; margin-top: 4px; }
 </style>
 </head>
 <body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen active">
+  <div class="login-emoji">💰</div>
+  <div class="login-title">Finanzas S&amp;G</div>
+  <div class="login-sub">Hola! Toca tu nombre para continuar</div>
+  <div class="login-btns">
+    <button type="button" class="login-btn sofi" id="btn-sofi">🌸 Sofi</button>
+    <button type="button" class="login-btn guille" id="btn-guille">💡 Guille</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app" style="display:none">
 <div class="app">
   <div class="header">
-    <div class="header-title">Finanzas <span>S&amp;G</span></div>
-    <div class="sync-pill syncing" id="spill">
-      <div class="sync-dot blink" id="sdot"></div>
-      <span id="stxt">Conectando</span>
+    <div class="header-left">
+      <div class="header-title">Finanzas <span>S&amp;G</span></div>
+      <div class="header-user" id="header-user"></div>
+    </div>
+    <div class="header-right">
+      <div class="sync-pill syncing" id="spill">
+        <div class="sync-dot blink" id="sdot"></div>
+        <span id="stxt">Conectando</span>
+      </div>
+      <button type="button" class="switch-btn" id="btn-cambiar">Cambiar</button>
     </div>
   </div>
   <div class="tabs">
@@ -156,7 +187,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
   </div>
   <div class="content">
 
-    <!-- TAB: GASTOS DIARIOS -->
+    <!-- TAB: GASTOS -->
     <div id="tab-gastos" class="section active">
       <div id="edit-banner-g" class="edit-banner" style="display:none">✏️ Editando gasto — modificá los campos y guardá</div>
       <div class="card">
@@ -168,8 +199,8 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
           </div>
         </div>
         <div class="field">
-          <label>¿Quién carga?</label>
-          <div class="toggle-row">
+          <label>Quien carga</label>
+          <div class="toggle-row" id="g-pag-row">
             <button type="button" class="tb sel sofi-s" data-group="g-pag" data-val="Sofi">Sofi</button>
             <button type="button" class="tb guille-s" data-group="g-pag" data-val="Guille">Guille</button>
           </div>
@@ -179,11 +210,11 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
           <input type="date" id="g-fecha" />
         </div>
         <div class="field">
-          <label>Categoría</label>
+          <label>Categoria</label>
           <select id="g-cat"></select>
         </div>
         <div class="field">
-          <label>Subcategoría</label>
+          <label>Subcategoria</label>
           <select id="g-subcat"></select>
         </div>
         <div class="field">
@@ -203,14 +234,14 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
           </div>
         </div>
         <div class="field" id="g-comp-field">
-          <label>¿Compartido?</label>
+          <label>Compartido?</label>
           <div class="toggle-row">
-            <button type="button" class="tb" data-group="g-comp" data-val="Si">Sí</button>
+            <button type="button" class="tb" data-group="g-comp" data-val="Si">Si</button>
             <button type="button" class="tb sel" data-group="g-comp" data-val="No">No</button>
           </div>
         </div>
         <div class="field" id="g-debe-field" style="display:none">
-          <label>¿Quién debe la mitad?</label>
+          <label>Quien debe la mitad?</label>
           <div class="toggle-row">
             <button type="button" class="tb sofi-s" data-group="g-debe" data-val="Sofi">Sofi</button>
             <button type="button" class="tb guille-s" data-group="g-debe" data-val="Guille">Guille</button>
@@ -218,12 +249,12 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
         </div>
       </div>
       <button type="button" class="save-btn" id="g-savebtn">Guardar gasto</button>
-      <button type="button" class="cancel-btn" id="g-cancelbtn" style="display:none">Cancelar edición</button>
+      <button type="button" class="cancel-btn" id="g-cancelbtn" style="display:none">Cancelar edicion</button>
     </div>
 
     <!-- TAB: TARJETAS -->
     <div id="tab-tarjetas" class="section">
-      <div id="edit-banner-t" class="edit-banner" style="display:none">✏️ Editando tarjeta — modificá los campos y guardá</div>
+      <div id="edit-banner-t" class="edit-banner" style="display:none">✏️ Editando tarjeta — modifica los campos y guarda</div>
       <div class="card">
         <div class="field">
           <label>Tarjeta</label>
@@ -241,7 +272,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
         </div>
         <div class="field">
           <label>Detalle</label>
-          <input type="text" id="t-detalle" placeholder="Ej: Netflix, ropa, supermercado..." autocomplete="off" />
+          <input type="text" id="t-detalle" placeholder="Ej: Netflix, ropa..." autocomplete="off" />
         </div>
         <div class="field">
           <label>Importe por cuota ($)</label>
@@ -269,13 +300,13 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
         <div class="field">
           <label>Tipo de gasto</label>
           <div class="toggle-row">
-            <button type="button" class="tb sel" data-group="t-tipo" data-val="propio">Solo mío</button>
+            <button type="button" class="tb sel" data-group="t-tipo" data-val="propio">Solo mio</button>
             <button type="button" class="tb" data-group="t-tipo" data-val="compartido">Compartido</button>
-            <button type="button" class="tb" data-group="t-tipo" data-val="suscripcion">Suscripción</button>
+            <button type="button" class="tb" data-group="t-tipo" data-val="suscripcion">Suscripcion</button>
           </div>
         </div>
         <div class="field" id="t-comp-field" style="display:none">
-          <label>¿Cuánto paga cada uno por cuota?</label>
+          <label>Cuanto paga cada uno por cuota?</label>
           <div class="porc-row">
             <span class="porc-label" style="color:#C9406A;">Sofi $</span>
             <input type="number" id="t-porc-sofi" placeholder="0" inputmode="decimal" min="0" />
@@ -286,7 +317,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
           </div>
         </div>
         <div class="field" id="t-subs-field" style="display:none">
-          <label>Suscripción</label>
+          <label>Suscripcion</label>
           <select id="t-subs-tipo">
             <option value="prime">Prime Video (Sofi, Guille, Santi)</option>
             <option value="youtube">YouTube (Sofi, Guille, Santi, Pablo, Alicia, Fran)</option>
@@ -295,7 +326,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
         </div>
       </div>
       <button type="button" class="save-btn" id="t-savebtn">Guardar tarjeta</button>
-      <button type="button" class="cancel-btn" id="t-cancelbtn" style="display:none">Cancelar edición</button>
+      <button type="button" class="cancel-btn" id="t-cancelbtn" style="display:none">Cancelar edicion</button>
     </div>
 
     <!-- TAB: HISTORIAL -->
@@ -317,27 +348,27 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 
   </div>
 </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── CONFIG ─────────────────────────────────────────────────────────────────
 var SCRIPT = 'https://script.google.com/macros/s/AKfycby3HJkQJwHEdfz55BLdNVFvtSkYujxWDhsGodYSsgbNidT9lLzaPhKxBjqxWkBLNdPVow/exec';
 var CSV_GASTOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQpl0BNS9VcV4a-q7qdC2qoKnKa43_czkt25NG_g6vdlCiiLRa8oAugERfiqHQghf81h6n5LhGjz5ao/pub?gid=0&single=true&output=csv';
 var CSV_TARJETAS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQpl0BNS9VcV4a-q7qdC2qoKnKa43_czkt25NG_g6vdlCiiLRa8oAugERfiqHQghf81h6n5LhGjz5ao/pub?gid=1931615473&single=true&output=csv';
 
 var CATS = {
-  "🏠 Hogar":["Alquiler","Expensas","Supermercado","Verduras / Frutas","Pollo / Carne","Bidon de Agua","Desayuno / Merienda","Mantenimiento Depto","Delivery"],
-  "📔 Servicios":["Luz","Agua","Gas","Internet"],
-  "🎉 Ocio":["Salidas (bar, cine, etc)","Viajes","Caprichos"],
-  "🧍 Personales":["Ropa","Regalos","Estética (manicura, peluqueria, etc)","Abono Celular","Juntada amig@s","Emprendimientos","Otros personales"],
-  "🚗 Auto":["Combustible","Seguro","Taller","Repuestos","Préstamos"],
-  "🚕 Transporte":["Uber / Taxi","Colectivo"],
-  "🏥 Salud":["Obra social","Farmacia","Psicologa","Cuidado personal","Urgencia"],
-  "🐶 Mascotas":["Alimento","Veterinario","Arena","Otros"],
-  "🏋️ Deporte":["Gimnasio","Actividades","Padel"],
-  "💳 Deudas / Tarjeta":["Pago de tarjeta","Préstamos"],
-  "🤝 Transferencias":["Sofi pagó a Guille","Guille pagó a Sofi"],
-  "💰 Ingresos":["Sueldo","Horas Extras","Prestamos","Bonificación","Otros"]
+  "Hogar":["Alquiler","Expensas","Supermercado","Verduras / Frutas","Pollo / Carne","Bidon de Agua","Desayuno / Merienda","Mantenimiento Depto","Delivery"],
+  "Servicios":["Luz","Agua","Gas","Internet"],
+  "Ocio":["Salidas (bar, cine, etc)","Viajes","Caprichos"],
+  "Personales":["Ropa","Regalos","Estetica","Abono Celular","Juntada amigos","Emprendimientos","Otros personales"],
+  "Auto":["Combustible","Seguro","Taller","Repuestos","Prestamos"],
+  "Transporte":["Uber / Taxi","Colectivo"],
+  "Salud":["Obra social","Farmacia","Psicologa","Cuidado personal","Urgencia"],
+  "Mascotas":["Alimento","Veterinario","Arena","Otros"],
+  "Deporte":["Gimnasio","Actividades","Padel"],
+  "Deudas / Tarjeta":["Pago de tarjeta","Prestamos"],
+  "Transferencias":["Sofi pago a Guille","Guille pago a Sofi"],
+  "Ingresos":["Sueldo","Horas Extras","Prestamos","Bonificacion","Otros"]
 };
 
 var SUBS = {
@@ -347,7 +378,7 @@ var SUBS = {
 
 var MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
+var usuario = null;
 var gState = { tipo:'Gasto', pag:'Sofi', med:'Efectivo', comp:'No', debe:'' };
 var tState = { tipo:'propio' };
 var entriesG = [], entriesT = [];
@@ -355,7 +386,7 @@ var editingGId = null, editingTId = null;
 var histFilter = 'todo';
 var balanceOpen = false;
 
-// ─── UTILS ───────────────────────────────────────────────────────────────────
+// ── UTILS ──
 function todayStr() {
   var d = new Date();
   return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
@@ -367,12 +398,13 @@ function mk(f) {
 }
 function ars(n) { return '$' + Math.round(n).toLocaleString('es-AR'); }
 function fmtDate(f) { return new Date(f).toLocaleDateString('es-AR', { day:'numeric', month:'short' }); }
+function curMK() { var d = new Date(); return d.getFullYear() + '-' + d.getMonth(); }
 
 function sync(s) {
   var p = document.getElementById('spill'), d = document.getElementById('sdot'), t = document.getElementById('stxt');
   p.className = 'sync-pill ' + s;
   d.className = 'sync-dot' + (s === 'syncing' ? ' blink' : '');
-  t.textContent = s === 'ok' ? 'Sincronizado' : s === 'syncing' ? 'Sincronizando' : 'Sin conexión';
+  t.textContent = s === 'ok' ? 'Sincronizado' : s === 'syncing' ? 'Sincronizando' : 'Sin conexion';
 }
 function toast(msg) {
   var el = document.getElementById('toast');
@@ -393,15 +425,52 @@ function parseCSV(text) {
   });
 }
 
-// ─── DATA LOADING ────────────────────────────────────────────────────────────
+// ── LOGIN ──
+function setUsuario(u) {
+  usuario = u;
+  try { localStorage.setItem('fsg_user', u); } catch(e) {}
+  document.getElementById('login-screen').classList.remove('active');
+  document.getElementById('main-app').style.display = 'block';
+  document.getElementById('header-user').textContent = 'Hola, ' + u + '!';
+  // Pre-seleccionar quien carga segun usuario
+  gState.pag = u;
+  document.querySelectorAll('[data-group="g-pag"]').forEach(function(b){ b.classList.remove('sel'); });
+  var pb = document.querySelector('[data-group="g-pag"][data-val="' + u + '"]');
+  if (pb) pb.classList.add('sel');
+  // Pre-seleccionar tarjeta segun usuario
+  var tarjetas = u === 'Sofi' ? ['MACRO Sofi','NARANJA Sofi'] : ['BBVA Guille','MACRO Guille','MERCADO PAGO Guille'];
+  var tarEl = document.getElementById('t-tarjeta');
+  tarEl.innerHTML = tarjetas.map(function(t){ return '<option>' + t + '</option>'; }).join('');
+  document.getElementById('g-fecha').value = todayStr();
+  document.getElementById('t-fecha').value = todayStr();
+  initGCats();
+  loadAll(function() {
+    var cur = curMK();
+    document.getElementById('h-mes').value = cur;
+    document.getElementById('r-mes').value = cur;
+    renderHist();
+    renderRes();
+  });
+}
+
+function cambiarUsuario() {
+  try { localStorage.removeItem('fsg_user'); } catch(e) {}
+  usuario = null;
+  document.getElementById('login-screen').classList.add('active');
+  document.getElementById('main-app').style.display = 'none';
+}
+
+document.getElementById('btn-sofi').addEventListener('click', function(){ setUsuario('Sofi'); });
+document.getElementById('btn-guille').addEventListener('click', function(){ setUsuario('Guille'); });
+document.getElementById('btn-cambiar').addEventListener('click', cambiarUsuario);
+
+// ── DATA LOADING ──
 function loadAll(cb) {
   sync('syncing');
   var doneG = false, doneT = false, errored = false;
-
   function check() {
     if (doneG && doneT) { sync('ok'); fillMonths(); if (cb) cb(); }
   }
-
   fetch(CSV_GASTOS + '&t=' + Date.now())
     .then(function(r){ return r.text(); })
     .then(function(text) {
@@ -412,7 +481,7 @@ function loadAll(cb) {
       }).filter(function(e){ return e.detalle && e.detalle.length > 0; });
       doneG = true; check();
     })
-    .catch(function(){ if (!errored) { errored=true; sync('error'); toast('Sin conexión'); } doneG=true; check(); });
+    .catch(function(){ if (!errored){ errored=true; sync('error'); toast('Sin conexion'); } doneG=true; check(); });
 
   fetch(CSV_TARJETAS + '&t=' + Date.now())
     .then(function(r){ return r.text(); })
@@ -426,7 +495,7 @@ function loadAll(cb) {
       }).filter(function(e){ return e.detalle && e.detalle.length > 0; });
       doneT = true; check();
     })
-    .catch(function(){ if (!errored) { errored=true; sync('error'); toast('Sin conexión'); } doneT=true; check(); });
+    .catch(function(){ if (!errored){ errored=true; sync('error'); toast('Sin conexion'); } doneT=true; check(); });
 }
 
 function postGasto(body, cb) {
@@ -436,24 +505,20 @@ function postGasto(body, cb) {
     .then(function(){ sync('ok'); if (cb) cb(true); })
     .catch(function(){ sync('error'); if (cb) cb(false); });
 }
-
 function postTarjeta(body, cb) {
-  body.hoja = 'tarjetas';
-  sync('syncing');
+  body.hoja = 'tarjetas'; sync('syncing');
   fetch(SCRIPT, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(body) })
     .then(function(r){ return r.text(); })
     .then(function(){ sync('ok'); if (cb) cb(true); })
     .catch(function(){ sync('error'); if (cb) cb(false); });
 }
 
-// ─── TABS ────────────────────────────────────────────────────────────────────
-var currentTab = 'gastos';
+// ── TABS ──
 function showTab(t) {
   ['gastos','tarjetas','historial','resumen'].forEach(function(n) {
     document.getElementById('tab-'+n).classList.toggle('active', n===t);
     document.getElementById('tbtn-'+n).classList.toggle('active', n===t);
   });
-  currentTab = t;
   if (t === 'historial') loadAll(renderHist);
   if (t === 'resumen') loadAll(renderRes);
 }
@@ -462,19 +527,15 @@ document.getElementById('tbtn-tarjetas').addEventListener('click', function(){ s
 document.getElementById('tbtn-historial').addEventListener('click', function(){ showTab('historial'); });
 document.getElementById('tbtn-resumen').addEventListener('click', function(){ showTab('resumen'); });
 
-// ─── TOGGLE BUTTONS ──────────────────────────────────────────────────────────
+// ── TOGGLES ──
 document.addEventListener('click', function(e) {
   var btn = e.target.closest('[data-group]');
   if (!btn) return;
-  var group = btn.getAttribute('data-group');
-  var val = btn.getAttribute('data-val');
+  var group = btn.getAttribute('data-group'), val = btn.getAttribute('data-val');
   btn.closest('.toggle-row').querySelectorAll('[data-group]').forEach(function(b){ b.classList.remove('sel'); });
   btn.classList.add('sel');
-
-  // Gastos state
   if (group === 'g-tipo') {
-    gState.tipo = val;
-    initGCats();
+    gState.tipo = val; initGCats();
     document.getElementById('g-comp-field').style.display = val === 'Ingreso' ? 'none' : '';
     document.getElementById('g-debe-field').style.display = 'none';
     gState.debe = '';
@@ -488,8 +549,6 @@ document.addEventListener('click', function(e) {
     if (val !== 'Si') { gState.debe = ''; document.querySelectorAll('[data-group="g-debe"]').forEach(function(b){ b.classList.remove('sel'); }); }
   }
   if (group === 'g-debe') gState.debe = val;
-
-  // Tarjetas state
   if (group === 't-tipo') {
     tState.tipo = val;
     document.getElementById('t-comp-field').style.display = val === 'compartido' ? '' : 'none';
@@ -498,9 +557,9 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ─── GASTOS FORM ─────────────────────────────────────────────────────────────
+// ── GASTOS FORM ──
 function initGCats() {
-  var cats = gState.tipo === 'Ingreso' ? ['💰 Ingresos'] : Object.keys(CATS).filter(function(c){ return c !== '💰 Ingresos'; });
+  var cats = gState.tipo === 'Ingreso' ? ['Ingresos'] : Object.keys(CATS).filter(function(c){ return c !== 'Ingresos'; });
   document.getElementById('g-cat').innerHTML = cats.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
   updateGSubs();
 }
@@ -509,6 +568,11 @@ function updateGSubs() {
   document.getElementById('g-subcat').innerHTML = (CATS[cat]||[]).map(function(s){ return '<option value="'+s+'">'+s+'</option>'; }).join('');
 }
 document.getElementById('g-cat').addEventListener('change', updateGSubs);
+
+function setToggleG(group, val) {
+  document.querySelectorAll('[data-group="'+group+'"]').forEach(function(b){ b.classList.remove('sel'); });
+  var b = document.querySelector('[data-group="'+group+'"][data-val="'+val+'"]'); if (b) b.classList.add('sel');
+}
 
 function resetGForm() {
   editingGId = null;
@@ -519,14 +583,9 @@ function resetGForm() {
   document.getElementById('g-detalle').value = '';
   document.getElementById('g-importe').value = '';
   document.getElementById('g-fecha').value = todayStr();
-  gState = { tipo:'Gasto', pag:'Sofi', med:'Efectivo', comp:'No', debe:'' };
-  ['g-tipo','g-pag','g-med','g-comp'].forEach(function(group) {
-    document.querySelectorAll('[data-group="'+group+'"]').forEach(function(b){ b.classList.remove('sel'); });
-  });
-  document.querySelector('[data-group="g-tipo"][data-val="Gasto"]').classList.add('sel');
-  document.querySelector('[data-group="g-pag"][data-val="Sofi"]').classList.add('sel');
-  document.querySelector('[data-group="g-med"][data-val="Efectivo"]').classList.add('sel');
-  document.querySelector('[data-group="g-comp"][data-val="No"]').classList.add('sel');
+  gState = { tipo:'Gasto', pag: usuario||'Sofi', med:'Efectivo', comp:'No', debe:'' };
+  setToggleG('g-tipo','Gasto'); setToggleG('g-pag', usuario||'Sofi');
+  setToggleG('g-med','Efectivo'); setToggleG('g-comp','No');
   document.querySelectorAll('[data-group="g-debe"]').forEach(function(b){ b.classList.remove('sel'); });
   document.getElementById('g-comp-field').style.display = '';
   document.getElementById('g-debe-field').style.display = 'none';
@@ -536,12 +595,12 @@ document.getElementById('g-cancelbtn').addEventListener('click', resetGForm);
 
 document.getElementById('g-savebtn').addEventListener('click', function() {
   var imp = parseFloat(document.getElementById('g-importe').value);
-  if (!imp || imp <= 0) { toast('Ingresá un importe válido'); return; }
+  if (!imp || imp <= 0) { toast('Ingresa un importe valido'); return; }
   var det = document.getElementById('g-detalle').value.trim();
-  if (!det) { toast('Ingresá un detalle'); return; }
-  if (gState.comp === 'Si' && !gState.debe) { toast('Indicá quién debe la mitad'); return; }
+  if (!det) { toast('Ingresa un detalle'); return; }
+  if (gState.comp === 'Si' && !gState.debe) { toast('Indica quien debe la mitad'); return; }
   var fechaVal = document.getElementById('g-fecha').value;
-  if (!fechaVal) { toast('Ingresá una fecha'); return; }
+  if (!fechaVal) { toast('Ingresa una fecha'); return; }
   var btn = document.getElementById('g-savebtn');
   btn.disabled = true; btn.textContent = editingGId ? 'Guardando cambios...' : 'Guardando...';
   var body = {
@@ -557,27 +616,20 @@ document.getElementById('g-savebtn').addEventListener('click', function() {
   };
   postGasto(body, function(ok) {
     btn.disabled = false;
-    if (ok) { toast(editingGId ? '¡Cambios guardados!' : '¡Guardado!'); resetGForm(); setTimeout(function(){ loadAll(); }, 2000); }
+    if (ok) { toast(editingGId ? 'Cambios guardados!' : 'Guardado!'); resetGForm(); setTimeout(function(){ loadAll(); }, 2000); }
     else { btn.textContent = editingGId ? 'Guardar cambios' : 'Guardar gasto'; toast('Error al guardar'); }
   });
 });
 
 function editGEntry(id) {
-  var e = entriesG.find(function(x){ return x.id === id; });
-  if (!e) return;
-  editingGId = id;
-  showTab('gastos');
+  var e = entriesG.find(function(x){ return x.id === id; }); if (!e) return;
+  editingGId = id; showTab('gastos');
   document.getElementById('edit-banner-g').style.display = '';
   document.getElementById('g-savebtn').textContent = 'Guardar cambios';
   document.getElementById('g-savebtn').classList.add('editing');
   document.getElementById('g-cancelbtn').style.display = '';
-  gState.tipo = e.tipo;
-  document.querySelectorAll('[data-group="g-tipo"]').forEach(function(b){ b.classList.remove('sel'); });
-  var tb = document.querySelector('[data-group="g-tipo"][data-val="'+e.tipo+'"]'); if (tb) tb.classList.add('sel');
-  initGCats();
-  gState.pag = e.pagador;
-  document.querySelectorAll('[data-group="g-pag"]').forEach(function(b){ b.classList.remove('sel'); });
-  var pb = document.querySelector('[data-group="g-pag"][data-val="'+e.pagador+'"]'); if (pb) pb.classList.add('sel');
+  gState.tipo = e.tipo; setToggleG('g-tipo', e.tipo); initGCats();
+  gState.pag = e.pagador; setToggleG('g-pag', e.pagador);
   var d = new Date(e.fecha);
   if (!isNaN(d.getTime())) document.getElementById('g-fecha').value = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
   var catEl = document.getElementById('g-cat');
@@ -587,26 +639,18 @@ function editGEntry(id) {
   for (var s=0;s<subEl.options.length;s++) { if (subEl.options[s].value===e.subcategoria){subEl.selectedIndex=s;break;} }
   document.getElementById('g-detalle').value = e.detalle;
   document.getElementById('g-importe').value = e.importe;
-  gState.med = e.medio;
-  document.querySelectorAll('[data-group="g-med"]').forEach(function(b){ b.classList.remove('sel'); });
-  var mb = document.querySelector('[data-group="g-med"][data-val="'+e.medio+'"]'); if (mb) mb.classList.add('sel');
-  gState.comp = e.compartido;
-  document.querySelectorAll('[data-group="g-comp"]').forEach(function(b){ b.classList.remove('sel'); });
-  var cb = document.querySelector('[data-group="g-comp"][data-val="'+e.compartido+'"]'); if (cb) cb.classList.add('sel');
+  gState.med = e.medio; setToggleG('g-med', e.medio);
+  gState.comp = e.compartido; setToggleG('g-comp', e.compartido);
   document.getElementById('g-comp-field').style.display = e.tipo==='Ingreso' ? 'none' : '';
   document.getElementById('g-debe-field').style.display = e.compartido==='Si' ? '' : 'none';
-  if (e.compartido==='Si' && e.quienDebe) {
-    gState.debe = e.quienDebe;
-    var db = document.querySelector('[data-group="g-debe"][data-val="'+e.quienDebe+'"]'); if (db) db.classList.add('sel');
-  }
+  if (e.compartido==='Si' && e.quienDebe) { gState.debe = e.quienDebe; setToggleG('g-debe', e.quienDebe); }
   window.scrollTo(0,0);
 }
 
-// ─── TARJETAS FORM ───────────────────────────────────────────────────────────
+// ── TARJETAS FORM ──
 function updateSubsInfo() {
   var key = document.getElementById('t-subs-tipo').value;
-  var s = SUBS[key];
-  var imp = parseFloat(document.getElementById('t-importe').value)||0;
+  var s = SUBS[key], imp = parseFloat(document.getElementById('t-importe').value)||0;
   var cuota = imp > 0 ? imp/s.total : 0;
   var externos = s.personas.filter(function(p){ return p!=='Sofi'&&p!=='Guille'; });
   var info = 'Se divide entre '+s.total+' personas: '+s.personas.join(', ')+'.';
@@ -633,29 +677,33 @@ function resetTForm() {
   tState.tipo = 'propio';
   document.querySelectorAll('[data-group="t-tipo"]').forEach(function(b){ b.classList.remove('sel'); });
   document.querySelector('[data-group="t-tipo"][data-val="propio"]').classList.add('sel');
+  if (usuario) {
+    var tarjetas = usuario === 'Sofi' ? ['MACRO Sofi','NARANJA Sofi'] : ['BBVA Guille','MACRO Guille','MERCADO PAGO Guille'];
+    document.getElementById('t-tarjeta').innerHTML = tarjetas.map(function(t){ return '<option>'+t+'</option>'; }).join('');
+  }
 }
 document.getElementById('t-cancelbtn').addEventListener('click', resetTForm);
 
 document.getElementById('t-savebtn').addEventListener('click', function() {
   var imp = parseFloat(document.getElementById('t-importe').value);
-  if (!imp || imp<=0) { toast('Ingresá un importe válido'); return; }
+  if (!imp || imp<=0) { toast('Ingresa un importe valido'); return; }
   var det = document.getElementById('t-detalle').value.trim();
-  if (!det) { toast('Ingresá un detalle'); return; }
+  if (!det) { toast('Ingresa un detalle'); return; }
   var fechaVal = document.getElementById('t-fecha').value;
-  if (!fechaVal) { toast('Ingresá una fecha'); return; }
+  if (!fechaVal) { toast('Ingresa una fecha'); return; }
   var cuotas = parseInt(document.getElementById('t-cuotas').value)||1;
   var mSofi=0, mGuille=0, subsKey='';
   if (tState.tipo==='compartido') {
     mSofi = parseFloat(document.getElementById('t-porc-sofi').value)||0;
     mGuille = parseFloat(document.getElementById('t-porc-guille').value)||0;
-    if (mSofi+mGuille<=0) { toast('Ingresá cuánto paga cada uno'); return; }
+    if (mSofi+mGuille<=0) { toast('Ingresa cuanto paga cada uno'); return; }
   } else if (tState.tipo==='suscripcion') {
     subsKey = document.getElementById('t-subs-tipo').value;
     var s = SUBS[subsKey]; var cuota = imp/s.total;
     mSofi = cuota; mGuille = s.personas.indexOf('Guille')>=0 ? cuota : 0;
   } else {
     var esSofi = document.getElementById('t-tarjeta').value.indexOf('Sofi')>=0;
-    mSofi = esSofi ? imp : 0; mGuille = esSofi ? 0 : imp;
+    mSofi = esSofi?imp:0; mGuille = esSofi?0:imp;
   }
   var tarjeta = document.getElementById('t-tarjeta').value;
   var btn = document.getElementById('t-savebtn'); btn.disabled=true; btn.textContent='Guardando...';
@@ -665,7 +713,7 @@ document.getElementById('t-savebtn').addEventListener('click', function() {
   function saveNext() {
     if (saved >= cuotas) {
       btn.disabled=false; btn.textContent='Guardar tarjeta';
-      toast(cuotas>1 ? cuotas+' cuotas guardadas!' : '¡Guardado!');
+      toast(cuotas>1 ? cuotas+' cuotas guardadas!' : 'Guardado!');
       resetTForm(); setTimeout(function(){ loadAll(); }, 2000); return;
     }
     var fechaCuota = new Date(fechaBase); fechaCuota.setMonth(fechaCuota.getMonth()+saved);
@@ -688,13 +736,14 @@ document.getElementById('t-savebtn').addEventListener('click', function() {
 });
 
 function editTEntry(id) {
-  var e = entriesT.find(function(x){ return x.id===id; });
-  if (!e) return;
+  var e = entriesT.find(function(x){ return x.id===id; }); if (!e) return;
   editingTId = id; showTab('tarjetas');
   document.getElementById('edit-banner-t').style.display = '';
   document.getElementById('t-savebtn').textContent = 'Guardar cambios';
   document.getElementById('t-savebtn').classList.add('editing');
   document.getElementById('t-cancelbtn').style.display = '';
+  var TODAS = ['MACRO Sofi','NARANJA Sofi','BBVA Guille','MACRO Guille','MERCADO PAGO Guille'];
+  document.getElementById('t-tarjeta').innerHTML = TODAS.map(function(t){ return '<option>'+t+'</option>'; }).join('');
   var tarEl = document.getElementById('t-tarjeta');
   for (var t=0;t<tarEl.options.length;t++) { if (tarEl.options[t].value===e.tarjeta){tarEl.selectedIndex=t;break;} }
   var d = new Date(e.fecha);
@@ -709,30 +758,75 @@ function editTEntry(id) {
   document.getElementById('t-subs-field').style.display = tState.tipo==='suscripcion' ? '' : 'none';
   document.getElementById('t-porc-sofi').value = e.montSofi||'';
   document.getElementById('t-porc-guille').value = e.montGuille||'';
-  if (tState.tipo==='suscripcion'&&e.subsKey) {
-    var subEl=document.getElementById('t-subs-tipo');
+  if (tState.tipo==='suscripcion' && e.subsKey) {
+    var subEl = document.getElementById('t-subs-tipo');
     for (var s=0;s<subEl.options.length;s++){if(subEl.options[s].value===e.subsKey){subEl.selectedIndex=s;break;}}
     updateSubsInfo();
   }
   window.scrollTo(0,0);
 }
 
-// ─── MONTHS ──────────────────────────────────────────────────────────────────
+// ── MONTHS ──
 function fillMonths() {
   var keys = [];
   entriesG.concat(entriesT).forEach(function(e){ var k=mk(e.fecha); if(k&&keys.indexOf(k)<0) keys.push(k); });
   keys.sort().reverse();
-  var now = new Date(), cur = now.getFullYear()+'-'+now.getMonth();
+  var cur = curMK();
   if (keys.indexOf(cur)<0) keys.unshift(cur);
   var opts = keys.map(function(k){ var p=k.split('-'); return '<option value="'+k+'">'+MESES[+p[1]]+' '+p[0]+'</option>'; }).join('');
   document.getElementById('h-mes').innerHTML = opts;
   document.getElementById('r-mes').innerHTML = opts;
-  // Forzar mes actual siempre
   document.getElementById('h-mes').value = cur;
   document.getElementById('r-mes').value = cur;
 }
 
-// ─── HISTORIAL ───────────────────────────────────────────────────────────────
+// ── BALANCE ACUMULADO ──
+// Calcula el neto (positivo = Sofi le debe a Guille) para un key de mes dado
+function calcNetoMes(key) {
+  var gs = entriesG.filter(function(e){ return mk(e.fecha)===key; });
+  var ts = entriesT.filter(function(e){ return mk(e.fecha)===key; });
+
+  var compSofi = gs.filter(function(e){ return e.tipo==='Gasto' && e.quienDebe==='Sofi'; });
+  var compGuille = gs.filter(function(e){ return e.tipo==='Gasto' && e.quienDebe==='Guille'; });
+  var dSofiG = compSofi.reduce(function(a,b){ return a+b.importe/2; },0);
+  var dGuilleG = compGuille.reduce(function(a,b){ return a+b.importe/2; },0);
+
+  var pagosGuilleG = gs.filter(function(e){ return e.subcategoria==='Guille pago a Sofi'; });
+  var pagosSofiG = gs.filter(function(e){ return e.subcategoria==='Sofi pago a Guille'; });
+  var tPagGuilleG = pagosGuilleG.reduce(function(a,b){ return a+b.importe; },0);
+  var tPagSofiG = pagosSofiG.reduce(function(a,b){ return a+b.importe; },0);
+
+  var guilleDebe = 0, sofiDebe = 0;
+  ts.forEach(function(e){
+    var m = getTCardMontos(e);
+    var esTarSofi = e.tarjeta.indexOf('Sofi')>=0;
+    if (esTarSofi) guilleDebe += m.guille;
+    else sofiDebe += m.sofi;
+  });
+
+  var sofiDebeTotal = Math.max(0, dSofiG + sofiDebe - tPagSofiG);
+  var guilleDebeTotal = Math.max(0, dGuilleG + guilleDebe - tPagGuilleG);
+  return sofiDebeTotal - guilleDebeTotal; // positivo = Sofi le debe a Guille
+}
+
+// Suma el saldo acumulado de todos los meses anteriores al mes dado
+function calcSaldoAnterior(key) {
+  var p = key.split('-');
+  var year = parseInt(p[0]), month = parseInt(p[1]);
+  var total = 0;
+  var keys = [];
+  entriesG.concat(entriesT).forEach(function(e){ var k=mk(e.fecha); if(k&&keys.indexOf(k)<0) keys.push(k); });
+  keys.forEach(function(k) {
+    var kp = k.split('-');
+    var ky = parseInt(kp[0]), km = parseInt(kp[1]);
+    if (ky < year || (ky === year && km < month)) {
+      total += calcNetoMes(k);
+    }
+  });
+  return total;
+}
+
+// ── HISTORIAL ──
 document.getElementById('h-mes').addEventListener('change', renderHist);
 document.querySelectorAll('.ftab').forEach(function(ft){
   ft.addEventListener('click', function(){
@@ -749,13 +843,11 @@ function renderHist() {
   var listT = entriesT.filter(function(e){ return mk(e.fecha)===key; }).map(function(e){ return Object.assign({}, e, {_src:'tarjetas'}); });
   var list = histFilter==='gastos' ? listG : histFilter==='tarjetas' ? listT : listG.concat(listT);
   list.sort(function(a,b){ return new Date(b.fecha)-new Date(a.fecha); });
-
   var el = document.getElementById('h-list');
   if (!list.length) { el.innerHTML='<div class="empty">Sin registros este mes</div>'; return; }
-
   el.innerHTML = list.map(function(e) {
     if (e._src==='gastos') {
-      return '<div class="entry" data-id="'+e.id+'" data-src="gastos">'
+      return '<div class="entry">'
         +'<div class="entry-top"><div style="min-width:0;flex:1;">'
         +'<div class="entry-name">'+e.detalle+'</div>'
         +'<div class="entry-cat">'+e.categoria+' › '+e.subcategoria+'</div>'
@@ -765,7 +857,7 @@ function renderHist() {
         +'<button type="button" class="del-btn" data-id="'+e.id+'" data-src="gastos">✕</button>'
         +'</div></div>'
         +'<div class="entry-meta">'
-        +'<span class="badge bx">💸 Gasto</span>'
+        +'<span class="badge bx">Gasto</span>'
         +'<span class="badge '+(e.pagador==='Sofi'?'bs':'bg')+'">'+e.pagador+'</span>'
         +'<span class="badge bx">'+e.medio+'</span>'
         +(e.compartido==='Si'?'<span class="badge bc">Debe: '+e.quienDebe+'</span>':'')
@@ -774,7 +866,7 @@ function renderHist() {
     } else {
       var cuotaLabel = e.cuotas>1 ? 'C'+e.cuotaActual+'/'+e.cuotas : 'Contado';
       var esSofiCard = e.tarjeta.indexOf('Sofi')>=0;
-      return '<div class="entry" data-id="'+e.id+'" data-src="tarjetas">'
+      return '<div class="entry">'
         +'<div class="entry-top"><div style="min-width:0;flex:1;">'
         +'<div class="entry-name">'+e.detalle+'</div>'
         +'<div class="entry-cat">'+e.tarjeta+'</div>'
@@ -784,7 +876,7 @@ function renderHist() {
         +'<button type="button" class="del-btn" data-id="'+e.id+'" data-src="tarjetas">✕</button>'
         +'</div></div>'
         +'<div class="entry-meta">'
-        +'<span class="badge bx">💳 Tarjeta</span>'
+        +'<span class="badge bx">Tarjeta</span>'
         +'<span class="badge '+(esSofiCard?'bs':'bg')+'">'+(esSofiCard?'Sofi':'Guille')+'</span>'
         +'<span class="badge bt">'+cuotaLabel+'</span>'
         +(e.tipoGasto==='compartido'?'<span class="badge bc">Compartido</span>':'')
@@ -793,7 +885,6 @@ function renderHist() {
         +'</div></div>';
     }
   }).join('');
-
   el.querySelectorAll('.edit-btn').forEach(function(b){
     b.addEventListener('click', function(){
       var src = this.getAttribute('data-src'), id = this.getAttribute('data-id');
@@ -802,14 +893,13 @@ function renderHist() {
   });
   el.querySelectorAll('.del-btn').forEach(function(b){
     b.addEventListener('click', function(){
-      var src = this.getAttribute('data-src'), id = this.getAttribute('data-id');
-      delEntry(id, src);
+      delEntry(this.getAttribute('data-id'), this.getAttribute('data-src'));
     });
   });
 }
 
 function delEntry(id, src) {
-  if (!confirm('¿Eliminás este registro?')) return;
+  if (!confirm('Eliminas este registro?')) return;
   var fn = src==='gastos' ? postGasto : postTarjeta;
   fn({ action:'delete', id:id }, function(ok){
     if (ok) { toast('Eliminado'); setTimeout(function(){ loadAll(renderHist); }, 2000); }
@@ -817,8 +907,8 @@ function delEntry(id, src) {
   });
 }
 
-// ─── RESUMEN ─────────────────────────────────────────────────────────────────
-document.getElementById('r-mes').addEventListener('change', renderRes);
+// ── RESUMEN ──
+document.getElementById('r-mes').addEventListener('change', function(){ balanceOpen=false; renderRes(); });
 
 function getTCardMontos(e) {
   if (e.tipoGasto==='suscripcion' && e.subsKey && SUBS[e.subsKey]) {
@@ -837,7 +927,6 @@ function renderRes() {
   var gs = entriesG.filter(function(e){ return mk(e.fecha)===key; });
   var ts = entriesT.filter(function(e){ return mk(e.fecha)===key; });
 
-  // ── Gastos diarios balance ──
   var gastosExp = gs.filter(function(e){ return e.tipo==='Gasto'; });
   var ingresos = gs.filter(function(e){ return e.tipo==='Ingreso'; });
   var tGastos = gastosExp.reduce(function(a,b){ return a+b.importe; },0);
@@ -845,57 +934,61 @@ function renderRes() {
 
   var compSofi = gastosExp.filter(function(e){ return e.quienDebe==='Sofi'; });
   var compGuille = gastosExp.filter(function(e){ return e.quienDebe==='Guille'; });
-  var dSofiG = compSofi.reduce(function(a,b){ return a+b.importe/2; },0);   // Sofi debe (de gastos diarios)
-  var dGuilleG = compGuille.reduce(function(a,b){ return a+b.importe/2; },0); // Guille debe (de gastos diarios)
+  var dSofiG = compSofi.reduce(function(a,b){ return a+b.importe/2; },0);
+  var dGuilleG = compGuille.reduce(function(a,b){ return a+b.importe/2; },0);
 
-  var pagosGuilleG = gs.filter(function(e){ return e.categoria==='🤝 Transferencias'&&e.subcategoria==='Guille pagó a Sofi'; });
-  var pagosSofiG = gs.filter(function(e){ return e.categoria==='🤝 Transferencias'&&e.subcategoria==='Sofi pagó a Guille'; });
+  var pagosGuilleG = gs.filter(function(e){ return e.subcategoria==='Guille pago a Sofi'; });
+  var pagosSofiG = gs.filter(function(e){ return e.subcategoria==='Sofi pago a Guille'; });
   var tPagGuilleG = pagosGuilleG.reduce(function(a,b){ return a+b.importe; },0);
   var tPagSofiG = pagosSofiG.reduce(function(a,b){ return a+b.importe; },0);
 
-  // ── Tarjetas balance ──
-  var guilleDebe = 0, sofiDebe = 0;
+  var guilleDebe=0, sofiDebe=0;
   ts.forEach(function(e){
     var m = getTCardMontos(e);
     var esTarSofi = e.tarjeta.indexOf('Sofi')>=0;
-    if (esTarSofi) guilleDebe += m.guille;  // Guille debe a Sofi
-    else sofiDebe += m.sofi;                 // Sofi debe a Guille
+    if (esTarSofi) guilleDebe += m.guille;
+    else sofiDebe += m.sofi;
   });
 
-  // ── Neto unificado ──
-  // Sofi le debe a Guille: dSofiG (diarios) + sofiDebe (tarjetas) - tPagSofiG (lo que ya pagó)
-  // Guille le debe a Sofi: dGuilleG (diarios) + guilleDebe (tarjetas) - tPagGuilleG (lo que ya pagó)
   var sofiDebeTotal = Math.max(0, dSofiG + sofiDebe - tPagSofiG);
   var guilleDebeTotal = Math.max(0, dGuilleG + guilleDebe - tPagGuilleG);
-  var netoSofi = sofiDebeTotal - guilleDebeTotal; // positivo = Sofi le debe a Guille
+  var netoMes = sofiDebeTotal - guilleDebeTotal;
 
-  // ── Render ──
-  var h = '<div class="sec-label">'+label+'</div>';
+  // Saldo arrastrado de meses anteriores
+  var saldoAnt = calcSaldoAnterior(key); // positivo = Sofi le debia a Guille
+  var netoTotal = netoMes + saldoAnt;
 
-  // Stats grid
+  var h = '<div class="sec-label">' + label + '</div>';
+
   var tTarjetas = ts.reduce(function(a,b){ return a+b.importe; },0);
   h += '<div class="stat-grid">'
-    + '<div class="stat"><div class="slabel">Gastos diarios</div><div class="sval red">'+ars(tGastos)+'</div></div>'
+    + '<div class="stat"><div class="slabel">Gastos</div><div class="sval red">'+ars(tGastos)+'</div></div>'
     + '<div class="stat"><div class="slabel">Tarjetas</div><div class="sval red">'+ars(tTarjetas)+'</div></div>'
     + '<div class="stat"><div class="slabel">Ingresos</div><div class="sval green">'+ars(tIngresos)+'</div></div>'
     + '<div class="stat"><div class="slabel">Registros</div><div class="sval">'+(gs.length+ts.length)+'</div></div>'
     + '</div>';
 
-  // Balance neto unificado
-  var balTexto, balOk = Math.abs(netoSofi) < 1;
-  if (balOk) balTexto = '¡Están al día! 🎉';
-  else if (netoSofi > 0) balTexto = 'Sofi le debe a Guille ' + ars(Math.abs(netoSofi));
-  else balTexto = 'Guille le debe a Sofi ' + ars(Math.abs(netoSofi));
+  // Saldo anterior si existe
+  if (Math.abs(saldoAnt) > 1) {
+    var sAntTexto = saldoAnt > 0 ? 'Sofi venia debiendo a Guille ' + ars(Math.abs(saldoAnt)) : 'Guille venia debiendo a Sofi ' + ars(Math.abs(saldoAnt));
+    h += '<div class="saldo-card"><div class="saldo-label">Saldo arrastrado</div><div class="saldo-val">'+sAntTexto+'</div></div>';
+  }
+
+  // Balance neto total
+  var balOk = Math.abs(netoTotal) < 1;
+  var balTexto;
+  if (balOk) balTexto = 'Estan al dia!';
+  else if (netoTotal > 0) balTexto = 'Sofi le debe a Guille ' + ars(Math.abs(netoTotal));
+  else balTexto = 'Guille le debe a Sofi ' + ars(Math.abs(netoTotal));
 
   h += '<div class="balance-card'+(balOk?' ok':'')+'" id="balance-banner">'
-    + '<div class="b-label">Balance neto</div>'
+    + '<div class="b-label">Balance neto'+(Math.abs(saldoAnt)>1?' (incluye meses anteriores)':'')+'</div>'
     + '<div class="b-main">'+balTexto+'</div>'
-    + (!balOk ? '<div class="b-tap">Tocá para ver el detalle ▼</div>' : '')
+    + (!balOk ? '<div class="b-tap">Toca para ver el detalle</div>' : '')
     + '<div class="b-detail" id="b-detail">';
 
-  // Detalle gastos diarios
   if (dSofiG + dGuilleG > 0) {
-    h += '<div class="b-section-title">Gastos diarios compartidos</div>';
+    h += '<div class="b-section-title">Gastos compartidos este mes</div>';
     compSofi.forEach(function(e){
       h += '<div class="b-item"><span class="b-item-name">'+e.detalle+' <span style="opacity:.5;font-size:11px;">('+fmtDate(e.fecha)+')</span></span><span class="b-item-amt">Sofi debe '+ars(e.importe/2)+'</span></div>';
     });
@@ -903,39 +996,36 @@ function renderRes() {
       h += '<div class="b-item"><span class="b-item-name">'+e.detalle+' <span style="opacity:.5;font-size:11px;">('+fmtDate(e.fecha)+')</span></span><span class="b-item-amt">Guille debe '+ars(e.importe/2)+'</span></div>';
     });
   }
-
-  // Detalle tarjetas
   if (guilleDebe + sofiDebe > 0) {
-    h += '<div class="b-section-title">Tarjetas (por mes)</div>';
+    h += '<div class="b-section-title">Tarjetas este mes</div>';
     ts.forEach(function(e){
       var m = getTCardMontos(e);
       var esTarSofi = e.tarjeta.indexOf('Sofi')>=0;
       var quien = esTarSofi ? m.guille : m.sofi;
-      var label = esTarSofi ? 'Guille debe a Sofi' : 'Sofi debe a Guille';
-      if (quien > 0) {
-        h += '<div class="b-item"><span class="b-item-name">'+e.detalle+' <span style="opacity:.5;font-size:11px;">('+e.tarjeta+')</span></span><span class="b-item-amt">'+label+' '+ars(quien)+'</span></div>';
-      }
+      var lbl = esTarSofi ? 'Guille debe a Sofi' : 'Sofi debe a Guille';
+      if (quien > 0) h += '<div class="b-item"><span class="b-item-name">'+e.detalle+' <span style="opacity:.5;font-size:11px;">('+e.tarjeta+')</span></span><span class="b-item-amt">'+lbl+' '+ars(quien)+'</span></div>';
     });
   }
-
-  // Pagos realizados
   if (tPagGuilleG + tPagSofiG > 0) {
     h += '<div class="b-section-title">Pagos realizados</div>';
-    pagosGuilleG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">✓ Guille pagó a Sofi ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
-    pagosSofiG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">✓ Sofi pagó a Guille ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
+    pagosGuilleG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">Guille pago a Sofi ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
+    pagosSofiG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">Sofi pago a Guille ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
   }
-
+  if (Math.abs(saldoAnt) > 1) {
+    h += '<div class="b-section-title">Arrastre de meses anteriores</div>';
+    h += '<div class="b-item"><span class="b-item-name">Saldo pendiente</span><span class="b-item-amt">'+(saldoAnt>0?'Sofi debia '+ars(Math.abs(saldoAnt)):'Guille debia '+ars(Math.abs(saldoAnt)))+'</span></div>';
+  }
   h += '</div></div>';
 
-  // Categorías (solo gastos diarios)
+  // Categorias
   var pc = {};
-  gastosExp.filter(function(e){ return e.categoria!=='🤝 Transferencias'; }).forEach(function(e){
+  gastosExp.filter(function(e){ return e.categoria!=='Transferencias'; }).forEach(function(e){
     pc[e.categoria] = (pc[e.categoria]||0) + e.importe;
   });
   var cl = Object.entries(pc).sort(function(a,b){ return b[1]-a[1]; });
   if (cl.length) {
     var mx = cl[0][1];
-    h += '<div class="card"><div class="card-title">Gastos por categoría</div>';
+    h += '<div class="card"><div class="card-title">Gastos por categoria</div>';
     cl.forEach(function(item){
       h += '<div class="bar-row"><div class="bar-label"><span class="bar-name">'+item[0]+'</span><span class="bar-val">'+ars(item[1])+'</span></div>'
         +'<div class="bar-track"><div class="bar-fill" style="width:'+Math.round(item[1]/mx*100)+'%"></div></div></div>';
@@ -943,7 +1033,7 @@ function renderRes() {
     h += '</div>';
   }
 
-  // Tarjetas detalle por tarjeta
+  // Tarjetas por tarjeta
   var TODAS = ['MACRO Sofi','NARANJA Sofi','BBVA Guille','MACRO Guille','MERCADO PAGO Guille'];
   var tarsConGasto = TODAS.filter(function(t){ return ts.some(function(e){ return e.tarjeta===t; }); });
   if (tarsConGasto.length) {
@@ -952,20 +1042,18 @@ function renderRes() {
       var gt = ts.filter(function(e){ return e.tarjeta===tarjeta; });
       var rTotal = gt.reduce(function(a,b){ return a+b.importe; },0);
       var esTarSofi = tarjeta.indexOf('Sofi')>=0;
-      var rSofi=0, rGuille=0;
-      var deudasTar = {};
+      var rSofi=0, rGuille=0, deudasTar={};
       gt.forEach(function(e){
         var m=getTCardMontos(e); rSofi+=m.sofi; rGuille+=m.guille;
         if(e.tipoGasto==='suscripcion'&&e.subsKey&&SUBS[e.subsKey]){
           var s=SUBS[e.subsKey],cuota=e.importe/s.total;
-          s.personas.filter(function(p){return p!=='Sofi'&&p!=='Guille';}).forEach(function(p){deudasTar[p]=(deudasTar[p]||0)+cuota;});
+          s.personas.filter(function(pp){return pp!=='Sofi'&&pp!=='Guille';}).forEach(function(pp){deudasTar[pp]=(deudasTar[pp]||0)+cuota;});
         }
       });
       h += '<div style="padding:12px 0;border-bottom:1px solid #F0EDE6;">'
         +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
         +'<span style="font-size:14px;font-weight:700;">'+tarjeta+'</span>'
-        +'<span style="font-size:14px;font-weight:800;color:#DC2626;">'+ars(rTotal)+'</span>'
-        +'</div>';
+        +'<span style="font-size:14px;font-weight:800;color:#DC2626;">'+ars(rTotal)+'</span></div>';
       gt.forEach(function(e){
         var m=getTCardMontos(e);
         h += '<div style="padding:4px 0;"><div style="display:flex;justify-content:space-between;">'
@@ -976,17 +1064,17 @@ function renderRes() {
         if(m.guille>0) h+='<span style="font-size:11px;color:#2563EB;">Guille '+ars(m.guille)+'</span>';
         if(e.tipoGasto==='suscripcion'&&e.subsKey&&SUBS[e.subsKey]){
           var s=SUBS[e.subsKey],cuota=e.importe/s.total;
-          s.personas.filter(function(p){return p!=='Sofi'&&p!=='Guille';}).forEach(function(p){
-            h+='<span style="font-size:11px;color:#6D28D9;">'+p+' '+ars(cuota)+'</span>';
+          s.personas.filter(function(pp){return pp!=='Sofi'&&pp!=='Guille';}).forEach(function(pp){
+            h+='<span style="font-size:11px;color:#6D28D9;">'+pp+' '+ars(cuota)+'</span>';
           });
         }
         h += '</div></div>';
       });
       h += '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">';
-      if(esTarSofi && rGuille>0) h+='<span style="font-size:12px;font-weight:700;color:#2563EB;background:#EFF6FF;padding:4px 10px;border-radius:8px;">Guille → Sofi '+ars(rGuille)+'</span>';
-      if(!esTarSofi && rSofi>0) h+='<span style="font-size:12px;font-weight:700;color:#C9406A;background:#FDF0F4;padding:4px 10px;border-radius:8px;">Sofi → Guille '+ars(rSofi)+'</span>';
-      Object.keys(deudasTar).forEach(function(p){
-        h+='<span style="font-size:12px;font-weight:700;color:#6D28D9;background:#F5F3FF;padding:4px 10px;border-radius:8px;">'+p+' → Sofi '+ars(deudasTar[p])+'</span>';
+      if(esTarSofi&&rGuille>0) h+='<span style="font-size:12px;font-weight:700;color:#2563EB;background:#EFF6FF;padding:4px 10px;border-radius:8px;">Guille a Sofi '+ars(rGuille)+'</span>';
+      if(!esTarSofi&&rSofi>0) h+='<span style="font-size:12px;font-weight:700;color:#C9406A;background:#FDF0F4;padding:4px 10px;border-radius:8px;">Sofi a Guille '+ars(rSofi)+'</span>';
+      Object.keys(deudasTar).forEach(function(pp){
+        h+='<span style="font-size:12px;font-weight:700;color:#6D28D9;background:#F5F3FF;padding:4px 10px;border-radius:8px;">'+pp+' a Sofi '+ars(deudasTar[pp])+'</span>';
       });
       h += '</div></div>';
     });
@@ -997,32 +1085,22 @@ function renderRes() {
 
   document.getElementById('r-content').innerHTML = h;
 
-  // Balance toggle
   var banner = document.getElementById('balance-banner');
   if (banner && !balOk) {
     banner.addEventListener('click', function(){
       balanceOpen = !balanceOpen;
       document.getElementById('b-detail').classList.toggle('open', balanceOpen);
       var tap = banner.querySelector('.b-tap');
-      if (tap) tap.textContent = balanceOpen ? 'Tocá para cerrar ▲' : 'Tocá para ver el detalle ▼';
+      if (tap) tap.textContent = balanceOpen ? 'Toca para cerrar' : 'Toca para ver el detalle';
     });
   }
 }
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
-document.getElementById('g-fecha').value = todayStr();
-document.getElementById('t-fecha').value = todayStr();
-initGCats();
-loadAll(function() {
-  var now = new Date();
-  var cur = now.getFullYear() + '-' + now.getMonth();
-  var hMes = document.getElementById('h-mes');
-  var rMes = document.getElementById('r-mes');
-  if (hMes) hMes.value = cur;
-  if (rMes) rMes.value = cur;
-  renderHist();
-  renderRes();
-});
+// ── INIT ──
+try {
+  var su = localStorage.getItem('fsg_user');
+  if (su) setUsuario(su);
+} catch(e) {}
 </script>
 </body>
 </html>
