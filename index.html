@@ -163,7 +163,7 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
   <div class="login-sub">Hola! Toca tu nombre para continuar</div>
   <div class="login-btns">
     <button type="button" class="login-btn sofi" id="btn-sofi">🌸 Sofi</button>
-    <button type="button" class="login-btn guille" id="btn-guille">💡 Guille</button>
+    <button type="button" class="login-btn guille" id="btn-guille">🏴‍☠️ Guille</button>
   </div>
 </div>
 
@@ -341,6 +341,16 @@ body { background: #F7F6F2; font-family: -apple-system, BlinkMacSystemFont, 'Seg
         <div class="ftab" id="ftab-gastos" data-filter="gastos">Gastos</div>
         <div class="ftab" id="ftab-tarjetas" data-filter="tarjetas">Tarjetas</div>
       </div>
+      <div id="h-subfilters" style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <select id="hf-persona" style="flex:1;font-size:13px;background:#fff;border:1px solid #E8E4DC;border-radius:10px;padding:8px 10px;font-family:inherit;-webkit-appearance:none;color:#1A1916;outline:none;">
+          <option value="">Todos</option>
+          <option value="Sofi">Sofi</option>
+          <option value="Guille">Guille</option>
+        </select>
+        <select id="hf-cat" style="flex:2;font-size:13px;background:#fff;border:1px solid #E8E4DC;border-radius:10px;padding:8px 10px;font-family:inherit;-webkit-appearance:none;color:#1A1916;outline:none;">
+          <option value="">Todas las categorias</option>
+        </select>
+      </div>
       <div class="card" id="h-list"><div class="lmsg">Cargando...</div></div>
     </div>
 
@@ -452,6 +462,7 @@ function setUsuario(u) {
     var cur = curMK();
     document.getElementById('h-mes').value = cur;
     document.getElementById('r-mes').value = cur;
+    updateCatFilter();
     renderHist();
     renderRes();
   });
@@ -831,21 +842,62 @@ function calcSaldoAnterior(key) {
 }
 
 // ── HISTORIAL ──
-document.getElementById('h-mes').addEventListener('change', renderHist);
+document.getElementById('h-mes').addEventListener('change', function(){ updateCatFilter(); renderHist(); });
+document.getElementById('hf-persona').addEventListener('change', renderHist);
+document.getElementById('hf-cat').addEventListener('change', renderHist);
+
 document.querySelectorAll('.ftab').forEach(function(ft){
   ft.addEventListener('click', function(){
     document.querySelectorAll('.ftab').forEach(function(x){ x.classList.remove('active'); });
     ft.classList.add('active');
     histFilter = ft.getAttribute('data-filter');
+    updateCatFilter();
     renderHist();
   });
 });
 
+function updateCatFilter() {
+  var key = document.getElementById('h-mes').value;
+  var listG = entriesG.filter(function(e){ return mk(e.fecha)===key; });
+  var listT = entriesT.filter(function(e){ return mk(e.fecha)===key; });
+  var catSet = [];
+  if (histFilter !== 'tarjetas') {
+    listG.forEach(function(e){ if (e.categoria && catSet.indexOf(e.categoria)<0) catSet.push(e.categoria); });
+  }
+  if (histFilter !== 'gastos') {
+    listT.forEach(function(e){ if (e.tarjeta && catSet.indexOf(e.tarjeta)<0) catSet.push(e.tarjeta); });
+  }
+  catSet.sort();
+  var catEl = document.getElementById('hf-cat');
+  var prev = catEl.value;
+  catEl.innerHTML = '<option value="">Todas las categorias</option>'
+    + catSet.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+  if (prev && catSet.indexOf(prev) >= 0) catEl.value = prev;
+}
+
 function renderHist() {
   var key = document.getElementById('h-mes').value;
+  var persona = document.getElementById('hf-persona').value;
+  var catFilt = document.getElementById('hf-cat').value;
   var listG = entriesG.filter(function(e){ return mk(e.fecha)===key; }).map(function(e){ return Object.assign({}, e, {_src:'gastos'}); });
   var listT = entriesT.filter(function(e){ return mk(e.fecha)===key; }).map(function(e){ return Object.assign({}, e, {_src:'tarjetas'}); });
   var list = histFilter==='gastos' ? listG : histFilter==='tarjetas' ? listT : listG.concat(listT);
+
+  // Filtro persona
+  if (persona) {
+    list = list.filter(function(e){
+      if (e._src==='gastos') return e.pagador === persona;
+      return e.tarjeta.indexOf(persona) >= 0;
+    });
+  }
+  // Filtro categoria / tarjeta
+  if (catFilt) {
+    list = list.filter(function(e){
+      if (e._src==='gastos') return e.categoria === catFilt;
+      return e.tarjeta === catFilt;
+    });
+  }
+
   list.sort(function(a,b){ return new Date(b.fecha)-new Date(a.fecha); });
   var el = document.getElementById('h-list');
   if (!list.length) { el.innerHTML='<div class="empty">Sin registros este mes</div>'; return; }
