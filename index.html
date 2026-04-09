@@ -795,42 +795,54 @@ function fillMonths() {
   document.getElementById('r-mes').value = cur;
 }
 
-// ── BALANCE ACUMULADO ──
-// Calcula el neto (positivo = Sofi le debe a Guille) para un key de mes dado
+// ── BALANCE ──
+// Neto de un mes: positivo = Sofi le debe a Guille, negativo = Guille le debe a Sofi
+// Solo considera gastos diarios compartidos y transferencias (NO tarjetas, porque
+// cada uno paga su propio resumen — las tarjetas generan deuda solo por la parte
+// del otro, que se salda con una transferencia)
 function calcNetoMes(key) {
   var gs = entriesG.filter(function(e){ return mk(e.fecha)===key; });
-  var ts = entriesT.filter(function(e){ return mk(e.fecha)===key; });
 
+  // Gastos diarios compartidos: quien debe la mitad
   var compSofi = gs.filter(function(e){ return e.tipo==='Gasto' && e.quienDebe==='Sofi'; });
   var compGuille = gs.filter(function(e){ return e.tipo==='Gasto' && e.quienDebe==='Guille'; });
-  var dSofiG = compSofi.reduce(function(a,b){ return a+b.importe/2; },0);
-  var dGuilleG = compGuille.reduce(function(a,b){ return a+b.importe/2; },0);
+  var dSofi = compSofi.reduce(function(a,b){ return a+b.importe/2; },0);   // Sofi debe
+  var dGuille = compGuille.reduce(function(a,b){ return a+b.importe/2; },0); // Guille debe
 
-  var pagosGuilleG = gs.filter(function(e){ return e.subcategoria==='Guille pago a Sofi'; });
-  var pagosSofiG = gs.filter(function(e){ return e.subcategoria==='Sofi pago a Guille'; });
-  var tPagGuilleG = pagosGuilleG.reduce(function(a,b){ return a+b.importe; },0);
-  var tPagSofiG = pagosSofiG.reduce(function(a,b){ return a+b.importe; },0);
-
-  var guilleDebe = 0, sofiDebe = 0;
+  // Tarjetas: parte que el otro debe transferir
+  var ts = entriesT.filter(function(e){ return mk(e.fecha)===key; });
   ts.forEach(function(e){
     var m = getTCardMontos(e);
-    var esTarSofi = e.tarjeta.indexOf('Sofi')>=0;
-    if (esTarSofi) guilleDebe += m.guille;
-    else sofiDebe += m.sofi;
+    var esTarSofi = e.tarjeta.indexOf('Sofi') >= 0;
+    if (esTarSofi) dGuille += m.guille;  // Guille debe pasar a Sofi
+    else dSofi += m.sofi;                 // Sofi debe pasar a Guille
   });
 
-  var sofiDebeTotal = Math.max(0, dSofiG + sofiDebe - tPagSofiG);
-  var guilleDebeTotal = Math.max(0, dGuilleG + guilleDebe - tPagGuilleG);
-  return sofiDebeTotal - guilleDebeTotal; // positivo = Sofi le debe a Guille
+  // Transferencias realizadas (pagos entre ellos)
+  // Subcategorias con tilde, tal como estan en CATS
+  var pagosGuilleASofi = gs.filter(function(e){ return e.subcategoria==='Guille pagó a Sofi'; });
+  var pagosSofiAGuille = gs.filter(function(e){ return e.subcategoria==='Sofi pagó a Guille'; });
+  var tPagGuille = pagosGuilleASofi.reduce(function(a,b){ return a+b.importe; },0);
+  var tPagSofi   = pagosSofiAGuille.reduce(function(a,b){ return a+b.importe; },0);
+
+  // Neto: cuanto debe Sofi menos cuanto debe Guille, ajustado por pagos
+  // positivo = Sofi le debe (neto) a Guille
+  // negativo = Guille le debe (neto) a Sofi
+  var netoSofi   = dSofi - tPagSofi;    // deuda de Sofi menos lo que ya pagó
+  var netoGuille = dGuille - tPagGuille; // deuda de Guille menos lo que ya pagó
+  return netoSofi - netoGuille;
 }
 
-// Suma el saldo acumulado de todos los meses anteriores al mes dado
+// Saldo acumulado de todos los meses anteriores al mes dado
 function calcSaldoAnterior(key) {
   var p = key.split('-');
   var year = parseInt(p[0]), month = parseInt(p[1]);
   var total = 0;
   var keys = [];
-  entriesG.concat(entriesT).forEach(function(e){ var k=mk(e.fecha); if(k&&keys.indexOf(k)<0) keys.push(k); });
+  entriesG.concat(entriesT).forEach(function(e){
+    var k = mk(e.fecha);
+    if (k && keys.indexOf(k) < 0) keys.push(k);
+  });
   keys.forEach(function(k) {
     var kp = k.split('-');
     var ky = parseInt(kp[0]), km = parseInt(kp[1]);
@@ -988,16 +1000,13 @@ function renderRes() {
   var tGastos = gastosExp.reduce(function(a,b){ return a+b.importe; },0);
   var tIngresos = ingresos.reduce(function(a,b){ return a+b.importe; },0);
 
+  // Gastos diarios compartidos
   var compSofi = gastosExp.filter(function(e){ return e.quienDebe==='Sofi'; });
   var compGuille = gastosExp.filter(function(e){ return e.quienDebe==='Guille'; });
   var dSofiG = compSofi.reduce(function(a,b){ return a+b.importe/2; },0);
   var dGuilleG = compGuille.reduce(function(a,b){ return a+b.importe/2; },0);
 
-  var pagosGuilleG = gs.filter(function(e){ return e.subcategoria==='Guille pago a Sofi'; });
-  var pagosSofiG = gs.filter(function(e){ return e.subcategoria==='Sofi pago a Guille'; });
-  var tPagGuilleG = pagosGuilleG.reduce(function(a,b){ return a+b.importe; },0);
-  var tPagSofiG = pagosSofiG.reduce(function(a,b){ return a+b.importe; },0);
-
+  // Tarjetas: parte que el otro debe transferir
   var guilleDebe=0, sofiDebe=0;
   ts.forEach(function(e){
     var m = getTCardMontos(e);
@@ -1006,9 +1015,16 @@ function renderRes() {
     else sofiDebe += m.sofi;
   });
 
-  var sofiDebeTotal = Math.max(0, dSofiG + sofiDebe - tPagSofiG);
-  var guilleDebeTotal = Math.max(0, dGuilleG + guilleDebe - tPagGuilleG);
-  var netoMes = sofiDebeTotal - guilleDebeTotal;
+  // Transferencias realizadas (con tilde, igual que en CATS)
+  var pagosGuilleG = gs.filter(function(e){ return e.subcategoria==='Guille pagó a Sofi'; });
+  var pagosSofiG = gs.filter(function(e){ return e.subcategoria==='Sofi pagó a Guille'; });
+  var tPagGuilleG = pagosGuilleG.reduce(function(a,b){ return a+b.importe; },0);
+  var tPagSofiG = pagosSofiG.reduce(function(a,b){ return a+b.importe; },0);
+
+  // Neto del mes: positivo = Sofi le debe a Guille
+  var netoSofi   = (dSofiG + sofiDebe) - tPagSofiG;
+  var netoGuille = (dGuilleG + guilleDebe) - tPagGuilleG;
+  var netoMes = netoSofi - netoGuille;
 
   // Saldo arrastrado de meses anteriores
   var saldoAnt = calcSaldoAnterior(key); // positivo = Sofi le debia a Guille
@@ -1064,8 +1080,8 @@ function renderRes() {
   }
   if (tPagGuilleG + tPagSofiG > 0) {
     h += '<div class="b-section-title">Pagos realizados</div>';
-    pagosGuilleG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">Guille pago a Sofi ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
-    pagosSofiG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">Sofi pago a Guille ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
+    pagosGuilleG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">✓ Guille pagó a Sofi ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
+    pagosSofiG.forEach(function(e){ h += '<div class="b-pago"><span class="b-pago-name">✓ Sofi pagó a Guille ('+fmtDate(e.fecha)+')</span><span class="b-pago-amt">'+ars(e.importe)+'</span></div>'; });
   }
   if (Math.abs(saldoAnt) > 1) {
     h += '<div class="b-section-title">Arrastre de meses anteriores</div>';
